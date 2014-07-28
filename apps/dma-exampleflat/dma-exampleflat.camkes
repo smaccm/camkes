@@ -1,0 +1,27 @@
+/*
+ * Copyright 2014, NICTA
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+import <std_connector.camkes>;
+
+import "components/Client/Client.camkes";
+
+assembly {
+    composition {
+        group flattened {
+        component Client client;
+        component Client client2;
+        }
+    }
+    configuration {
+        client.dma_pool = 16000;
+        client2.dma_pool = 21000;
+    }
+}
+

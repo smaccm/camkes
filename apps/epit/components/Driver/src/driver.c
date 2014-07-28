@@ -83,6 +83,7 @@ void epit_irq_callback(void *_ UNUSED)
 
 int run(void)
 {
+	printf("memdata: %p\n",(void*)mem);
 	irq_reg_callback(epit_irq_callback, NULL);
 	epit_init();
 	epit_set_interval(1000);

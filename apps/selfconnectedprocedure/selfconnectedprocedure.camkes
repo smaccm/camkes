@@ -1,0 +1,30 @@
+/*
+ * Copyright 2014, NICTA
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+import <std_connector.camkes>;
+
+procedure Proc {
+  string echo_string(in string s);
+}
+
+component Foo {
+  control;
+  uses Proc outgoing;
+  provides Proc incoming;
+}
+
+assembly {
+  composition {
+    component Foo foo;
+
+    connection seL4RPC s(from foo.outgoing, to foo.incoming);
+  }
+}
+

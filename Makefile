@@ -13,6 +13,9 @@ export PATH:=${PATH}:$(abspath tools/camkes)
 
 lib-dirs:=libs
 
+# Isabelle theory pre-processor.
+export TPP:=$(abspath tools/camkes/tools/tpp)
+
 # Build the loader image, rather than the default (app-images) because the
 # loader image actually ends up containing the component images.
 all: capdl-loader-experimental-image
@@ -32,6 +35,27 @@ ${STAGE_BASE}/parse-capDL/parse-capDL:
 	$(Q)mkdir -p "${STAGE_BASE}"
 	$(Q)cp -pur tools/capDL $(dir $@)
 	$(Q)$(MAKE) --no-print-directory --directory=$(dir $@) 2>&1 \
+        | while read line; do echo " $$line"; done; \
+        exit $${PIPESTATUS[0]}
+	@echo "[$(notdir $@)] done."
+
+ifeq (${CONFIG_CAMKES_PRUNE_GENERATED},y)
+${apps}: prune
+endif
+export PATH:=${PATH}:${STAGE_BASE}/pruner
+PHONY += prune
+prune: ${STAGE_BASE}/pruner/prune
+CONFIG_CAMKES_LLVM_PATH:=$(CONFIG_CAMKES_LLVM_PATH:"%"=%)
+ifeq (${CONFIG_CAMKES_LLVM_PATH},)
+${STAGE_BASE}/pruner/prune: export CFLAGS=
+else
+${STAGE_BASE}/pruner/prune: export CFLAGS=-I${CONFIG_CAMKES_LLVM_PATH}/include -L${CONFIG_CAMKES_LLVM_PATH}/lib
+endif
+${STAGE_BASE}/pruner/prune:
+	@echo "[$(notdir $@)] building..."
+	$(Q)mkdir -p "${STAGE_BASE}"
+	$(Q)cp -pur tools/pruner $(dir $@)
+	$(Q)CC=${HOSTCC} $(MAKE) V=$V --no-print-directory --directory=$(dir $@) 2>&1 \
         | while read line; do echo " $$line"; done; \
         exit $${PIPESTATUS[0]}
 	@echo "[$(notdir $@)] done."

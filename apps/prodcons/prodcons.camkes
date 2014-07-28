@@ -1,0 +1,45 @@
+/*
+ * Copyright 2014, NICTA
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+import <std_connector.camkes>;
+
+procedure Send {
+    void put(in unsigned int value);
+}
+
+procedure Receive {
+    unsigned int get(void);
+}
+
+component Producer {
+    control;
+    uses Send b;
+}
+
+component Consumer {
+    control;
+    uses Receive b;
+}
+
+component Buffer {
+    provides Send incoming;
+    provides Receive outgoing;
+}
+
+assembly {
+    composition {
+        component Producer p;
+        component Consumer c;
+        component Buffer b;
+
+        connection seL4RPC pb(from p.b, to b.incoming);
+        connection seL4RPC cb(from c.b, to b.outgoing);
+    }
+}

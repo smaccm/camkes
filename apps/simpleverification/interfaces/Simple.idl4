@@ -1,0 +1,18 @@
+/*
+ * Copyright 2014, NICTA
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+procedure Simple {
+    int echo_int(in int i);
+    int echo_parameter(in int pin, out int pout);
+    int echo_char(in char i);
+    void increment_char(inout char x);
+    void increment_parameter(inout int x);
+    void increment_64(inout uint64_t x);
+};
