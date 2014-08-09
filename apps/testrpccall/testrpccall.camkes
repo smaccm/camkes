@@ -1,0 +1,45 @@
+/*
+ * Copyright 2014, NICTA
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+import <std_connector.camkes>;
+
+procedure Simple {
+  int echo_int(in int i);
+}
+
+component Client {
+  control;
+  uses Simple s;
+}
+
+component Echo {
+  provides Simple s;
+  emits Ev o;
+  consumes Ev e;
+}
+
+component Poke {
+  control;
+  emits Ev e;
+  consumes Ev o;
+}
+
+assembly {
+  composition {
+    component Echo echo;
+    component Client client;
+    component Poke poke;
+
+    connection seL4RPCCall c(from client.s, to echo.s);
+    connection seL4Asynch ev(from poke.e, to echo.e);
+    connection seL4Asynch ev2(from echo.o, to poke.o);
+  }
+}
+

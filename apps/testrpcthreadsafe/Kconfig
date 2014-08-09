@@ -1,0 +1,20 @@
+#
+# Copyright 2014, NICTA
+#
+# This software may be distributed and modified according to the terms of
+# the GNU General Public License version 2. Note that NO WARRANTY is provided.
+# See "LICENSE_GPLv2.txt" for details.
+#
+# @TAG(NICTA_GPL)
+#
+
+config APP_TESTRPCTHREADSAFE
+    bool "Test for seL4RPC being thread safe"
+    default n
+    help
+        Currently the seL4RPC connector type is not thread safe. If two threads
+        attempt to invoke the same outgoing interface, their send order is not
+        guaranteed to be the same as their wait order. The effect of this is
+        that one of them can receive the response intended for the other. It is
+        even possible for one of them to receive a message *from* the other.
+        JIRA: CAMKES-171.

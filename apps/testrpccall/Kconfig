@@ -1,0 +1,18 @@
+#
+# Copyright 2014, NICTA
+#
+# This software may be distributed and modified according to the terms of
+# the GNU General Public License version 2. Note that NO WARRANTY is provided.
+# See "LICENSE_GPLv2.txt" for details.
+#
+# @TAG(NICTA_GPL)
+#
+
+config APP_TESTRPCCALL
+    bool "Test for seL4RPCCall correctly saving reply cap"
+    default n
+    help
+        The seL4RPCCall connector previously did not save the reply cap
+        necessary for returning from an invocation. This application is
+        designed to provoke a cap fault if this problem exists.
+        JIRA: CAMKES-170.

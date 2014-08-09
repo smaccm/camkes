@@ -1,0 +1,37 @@
+/*
+ * Copyright 2014, NICTA
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+import <std_connector.camkes>;
+
+procedure Simple {
+  int echo_int(in int i);
+}
+
+component Client {
+  control;
+  uses Simple s;
+  emits FakeEvent outgoing;
+  consumes FakeEvent incoming;
+}
+
+component Echo {
+  provides Simple s;
+}
+
+assembly {
+  composition {
+    component Echo echo;
+    component Client client;
+
+    connection seL4RPC simple(from client.s, to echo.s);
+    connection seL4Asynch fake(from client.outgoing, to client.incoming);
+  }
+}
+
