@@ -49,6 +49,7 @@ CONFIG_CAMKES_LLVM_PATH:=$(CONFIG_CAMKES_LLVM_PATH:"%"=%)
 ifeq (${CONFIG_CAMKES_LLVM_PATH},)
 ${STAGE_BASE}/pruner/prune: export CFLAGS=
 else
+  export PATH := ${CONFIG_CAMKES_LLVM_PATH}/bin:${PATH}
 ${STAGE_BASE}/pruner/prune: export CFLAGS=-I${CONFIG_CAMKES_LLVM_PATH}/include -L${CONFIG_CAMKES_LLVM_PATH}/lib
 endif
 ${STAGE_BASE}/pruner/prune:
