@@ -10,9 +10,13 @@
 
 procedure Simple {
     int echo_int(in int i);
+    int echo_int_1(in int i, in unsigned int j, in int32_t k, in uint32_t l);
     int echo_parameter(in int pin, out int pout);
     int echo_char(in char i);
     void increment_char(inout char x);
     void increment_parameter(inout int x);
+    int echo_int_2(in int i, in int j);
+    int echo_int_3(in int i, in char j);
     void increment_64(inout uint64_t x);
+    int echo_int_4(in int i, in int64_t j, in int k, in int l);
 };

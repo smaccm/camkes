@@ -17,6 +17,18 @@ int RPCTo_echo_int(int i) {
     return i;
 }
 
+int RPCTo_echo_int_1(int i, unsigned int j, int32_t k, uint32_t l) {
+    return i;
+}
+int RPCTo_echo_int_2(int i, int j) {
+    return i;
+}
+int RPCTo_echo_int_3(int i, char j) {
+    return i;
+}
+int RPCTo_echo_int_4(int i, int64_t j, int k, int l) {
+    return i;
+}
 int RPCTo_echo_parameter(int pin, int *pout) {
     *pout = pin;
     return pin;
