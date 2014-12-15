@@ -64,6 +64,7 @@ menu "Applications"
 
     menu "Examples"
         source "apps/simple/Kconfig"
+        source "apps/sc/Kconfig"
         source "apps/simpleverification/Kconfig"
         source "apps/dataport/Kconfig"
         source "apps/event/Kconfig"
