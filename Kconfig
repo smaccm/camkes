@@ -46,6 +46,7 @@ menu "Applications"
     source "apps/keyboard/Kconfig"
     source "apps/dma-example/Kconfig"
     source "apps/DARPA/Kconfig"
+    source "apps/timer/Kconfig"
 
     menu "Examples"
         source "apps/simple/Kconfig"
